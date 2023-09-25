@@ -1,8 +1,10 @@
 ﻿using build.Data.Configuration;
+using build.Domain.Entities;
 using build.Domain.Entities.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace build.Data.Context
 {
@@ -16,6 +18,10 @@ namespace build.Data.Context
 
         public DbSet<IdentityUserClaim<Guid>> IdentityUserClaims { get; set; }
         public DbSet<RefreshToken> RefreshToken { get; set; }
+        public DbSet<Project> Project { get; set; }
+        public DbSet<Topic> Topic { get; set; }
+        public DbSet<Subtopic> Subtopic { get; set; }
+        public DbSet<Post> Post { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -23,7 +29,7 @@ namespace build.Data.Context
 
             builder.HasDefaultSchema("Identity");
 
-  
+
         }
     }
 }
