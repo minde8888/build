@@ -1,4 +1,4 @@
-﻿namespace build.Api.Controller
+﻿namespace build.Api.Controllers
 {
     public class AuthController
     {

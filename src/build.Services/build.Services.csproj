@@ -9,4 +9,9 @@
     <PackageReference Include="AutoMapper" Version="12.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\build.Data\build.Data.csproj" />
+    <ProjectReference Include="..\build.Domain\build.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

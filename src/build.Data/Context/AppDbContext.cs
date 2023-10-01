@@ -29,7 +29,8 @@ namespace build.Data.Context
 
             builder.HasDefaultSchema("Identity");
 
-
+            builder.Entity<Project>().HasQueryFilter(p => p.IsDeleted == false);
+            builder.Entity<Post>().HasQueryFilter(p => p.IsDeleted == false);
         }
     }
 }

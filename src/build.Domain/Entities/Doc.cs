@@ -5,6 +5,6 @@ namespace build.Domain.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string ImageName { get; set; } = string.Empty;
+        public string FileName { get; set; } = string.Empty;
     }
 }

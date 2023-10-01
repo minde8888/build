@@ -11,6 +11,9 @@ namespace build.Domain.Entities
         public string Quantity { get; set; }
         public string UnitPrice { get; set; }
         public string Sum { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public DateTime DateUpdated { get; set; }
         public ICollection<Doc> Doc { get; set; }
         public ICollection<Checklist> Checklist { get; set; }
         public ICollection<Drawing> Drawing { get; set; }

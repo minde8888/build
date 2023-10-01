@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -8,6 +7,7 @@ using build.Services.Mapper;
 using build.Domain.Entities.Auth;
 using build.Data.Configuration;
 using build.Data.Context;
+using build.Services.Services;
 
 namespace build.Api
 {
@@ -19,11 +19,13 @@ namespace build.Api
 
             services.AddTransient<UserManager<ApplicationUser>>();
 
+            services.AddTransient<ProjectService>();
+
             services.AddIdentity<ApplicationUser, ApplicationRole>(o => o.SignIn.RequireConfirmedAccount = true)
              .AddRoles<ApplicationRole>()
              .AddRoleManager<RoleManager<ApplicationRole>>()
              .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
+             .AddDefaultTokenProviders();
 
             services.Configure<JwtConfig>(configuration.GetSection("JwtConfig"));
 
