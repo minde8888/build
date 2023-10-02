@@ -1,5 +1,6 @@
 ﻿using build.Data.Context;
 using build.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace build.Data.Repositories
 {
@@ -16,6 +17,16 @@ namespace build.Data.Repositories
         {
             _context.Project.Add(project);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Project> Get(Guid id)
+        {
+            return await _context.Project
+                  .Include(p => p.Topics)
+                      .ThenInclude(t => t.Subtopics)
+                          .ThenInclude(s => s.Posts)
+                  .Where(p => p.Id == id)
+                  .FirstOrDefaultAsync();
         }
     }
 }

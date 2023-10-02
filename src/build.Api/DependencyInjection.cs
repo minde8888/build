@@ -8,6 +8,7 @@ using build.Domain.Entities.Auth;
 using build.Data.Configuration;
 using build.Data.Context;
 using build.Services.Services;
+using build.Data.Repositories;
 
 namespace build.Api
 {
@@ -20,6 +21,7 @@ namespace build.Api
             services.AddTransient<UserManager<ApplicationUser>>();
 
             services.AddTransient<ProjectService>();
+            services.AddTransient<ProjectRepository>();
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(o => o.SignIn.RequireConfirmedAccount = true)
              .AddRoles<ApplicationRole>()
