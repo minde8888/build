@@ -28,5 +28,30 @@ namespace build.Data.Repositories
                   .Where(p => p.Id == id)
                   .FirstOrDefaultAsync();
         }
+
+        public async Task<List<Project>> GetAll()
+        {
+            return await _context.Project
+                 .Include(p => p.Topics)
+                     .ThenInclude(t => t.Subtopics)
+                         .ThenInclude(s => s.Posts).ToListAsync();
+        }
+
+        public async Task UpdateAsync(Project project)
+        {
+            project.DateUpdated = DateTime.UtcNow;
+
+            _context.Entry(project).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var product = await _context.Project.
+                Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            product.IsDeleted = true;
+            await _context.SaveChangesAsync();
+        }
     }
 }

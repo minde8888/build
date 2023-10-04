@@ -2,6 +2,7 @@
 using build.Services.Dtos;
 using build.Services.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 
 namespace build.Api.Controllers
 {
@@ -17,7 +18,7 @@ namespace build.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewProject([FromForm] Project project)
+        public async Task<IActionResult> AddNewProject(ProjectDto project)
         {
             await _projectService.AddProjectAsync(project);
             return Ok();
@@ -32,19 +33,21 @@ namespace build.Api.Controllers
         [HttpGet]
         public async Task<List<Project>> GetAllProject()
         {
-            return null;
+            return await _projectService.GetAllAsync();
         }
 
         [HttpPut]
-        public async Task<Project> UpdateProject()
+        public async Task<IActionResult> UpdateProject(ProjectDto project)
         {
-            return null;
+            await _projectService.UpdateProductAsync(project);
+            return Ok();
         }
 
         [HttpDelete]
-        public async Task<Project> DeleteProject()
+        public async Task<ActionResult> DeleteProject(string id)
         {
-            return null;
+            await _projectService.DeleteProjectAsync(id);
+            return Ok();
         }
     }
 }

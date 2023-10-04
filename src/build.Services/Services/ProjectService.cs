@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using build.Data.Repositories;
 using build.Domain.Entities;
+using build.Domain.Exceptions;
 using build.Services.Dtos;
 
 namespace build.Services.Services
@@ -15,9 +16,10 @@ namespace build.Services.Services
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task AddProjectAsync(Project project)
+        public async Task AddProjectAsync(ProjectDto project)
         {
-            await _projectRepository.Add(project);
+            var projectDto = _mapper.Map<Project>(project);
+            await _projectRepository.Add(projectDto);
         }
 
         public async Task<ProjectDto> GetAsync(String id)
@@ -26,9 +28,26 @@ namespace build.Services.Services
             return _mapper.Map<ProjectDto>(project);
         }
 
-        public void DeleteProjectAsync(Project project)
+        public async Task<List<Project>> GetAllAsync()
         {
+            var project = await _projectRepository.GetAll();
 
+            return project;
+        }
+
+        public async Task UpdateProductAsync(ProjectDto project)
+        {
+            if (project == null)
+                throw new ObjectNullException("Project can't by null");
+
+            await _projectRepository.UpdateAsync(project);
+        }
+
+        public async Task DeleteProjectAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id)) throw new StringNullException("Product id can't by null");
+            Guid newId = new(id);
+            await _projectRepository.DeleteAsync(newId);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using build.Domain.Exceptions;
 using Newtonsoft.Json;
 
 namespace build.Api.Middleware
@@ -32,10 +33,14 @@ namespace build.Api.Middleware
             string message;
             switch (exception)
             {
-                //case UserExistException _:
-                //    statusCode = (int)HttpStatusCode.NotFound;
-                //    message = exception.Message;
-                //    break;
+                case StringNullException _:
+                    statusCode = (int)HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
+                case ObjectNullException _:
+                    statusCode = (int)HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
                 default:
                     statusCode = (int)HttpStatusCode.InternalServerError;
                     message = "Internal server error occurred. " + exception;
