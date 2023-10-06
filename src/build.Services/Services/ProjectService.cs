@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿// Ignore Spelling: Dto
+
+using AutoMapper;
 using build.Data.Repositories;
 using build.Domain.Entities;
 using build.Domain.Exceptions;
@@ -35,11 +37,12 @@ namespace build.Services.Services
             return project;
         }
 
-        public async Task UpdateProductAsync(ProjectDto project)
+        public async Task UpdateProductAsync(ProjectDto projectDto)
         {
-            if (project == null)
+            if (projectDto == null)
                 throw new ObjectNullException("Project can't by null");
 
+            var project = _mapper.Map<Project>(projectDto);
             await _projectRepository.UpdateAsync(project);
         }
 

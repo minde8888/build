@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  build.api:
+    image: ${DOCKER_REGISTRY-}buildapi
+    build:
+      context: .
+      dockerfile: src/build.Api/Dockerfile
+    ports:
+      - "9001:80"
+      - "9002:443"
+    depends_on:
+      - postgresql_database
+    environment:
+      DockerCommandsConnectionString: "host=postgresql_database; username=postgres; password=admin; server=postgres; database=DB_build; port=5432;"
+  postgresql_database:
+    restart: always
+    image: postgres:15.1-alpine3.17
+    container_name: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: DB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - ./database-data:/var/lib/postgresql/data/
+volumes:
+  database-data:
